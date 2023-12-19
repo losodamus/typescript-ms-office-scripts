@@ -1,0 +1,34 @@
+function main(workbook: ExcelScript.Workbook) {
+	let selectedSheet = workbook.getActiveWorksheet();
+
+	// Set range A1 on selectedSheet
+	let lenOfGuid = 64;
+	let txtOfGuid = "";
+	let charOfGuid = "abcdefghijklmnopqrstuvwxyz".split("");
+
+	// Loop to create per length variable
+	for (var i = 0; i < lenOfGuid; i++) {
+		
+		// Toggle between numbers and letters
+		switch(getRandomInt(0, 2)) {
+			case 0: //  a-z
+				txtOfGuid += charOfGuid[getRandomInt(0, charOfGuid.length - 1)];
+				break;
+
+			case 1: //  A-Z
+				txtOfGuid += charOfGuid[getRandomInt(0, charOfGuid.length - 1)].toUpperCase();
+				break;
+
+			default: //  0-9
+				txtOfGuid += getRandomInt(0, 9).toString();
+		}
+	}
+	selectedSheet.getRange("A1").setValue(txtOfGuid);
+}
+
+//  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+function getRandomInt(min: number, max: number): number {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
